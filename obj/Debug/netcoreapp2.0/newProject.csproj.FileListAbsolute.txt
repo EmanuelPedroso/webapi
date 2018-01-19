@@ -1,0 +1,11 @@
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\bin\Debug\netcoreapp2.0\newProject.deps.json
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\bin\Debug\netcoreapp2.0\newProject.runtimeconfig.json
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\bin\Debug\netcoreapp2.0\newProject.runtimeconfig.dev.json
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\bin\Debug\netcoreapp2.0\newProject.dll
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\bin\Debug\netcoreapp2.0\newProject.pdb
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.csproj.CoreCompileInputs.cache
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.AssemblyInfoInputs.cache
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.AssemblyInfo.cs
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.dll
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.pdb
+C:\Users\Emanuel\Documents\aaimportante\RH\newProject\obj\Debug\netcoreapp2.0\newProject.csprojResolveAssemblyReference.cache
