@@ -13,17 +13,17 @@ namespace newProject.Controllers
     [Route("api/Hours")]
     public class HoursController : Controller
     {
-        private IMemoryCache date;
+        private IMemoryCache _date;
 
         public HoursController(IMemoryCache memoryCache)
         {
-            date = memoryCache;
+            _date = memoryCache;
         }
 
         [HttpGet("{date}")]
         public string Get()
         {
-            string novaData = date.Get<string>("novaData");
+            string novaData = _date.Get<string>("novaData");
             return novaData.ToString();
         }
 
@@ -31,7 +31,7 @@ namespace newProject.Controllers
         public object Put([FromForm]DataControl dataControl)
         {
             var dataRecebida = ChangeDate(dataControl.Date, dataControl.Op, dataControl.Minutes);
-            date.Set<string>("novaData", dataRecebida);
+            _date.Set<string>("novaData", dataRecebida);
 
             return new { success = true };
         }
@@ -40,7 +40,15 @@ namespace newProject.Controllers
         {
             var day = date.Substring(0, date.IndexOf("/"));
             date = date.Replace(day + "/", "");
-            var month = date.Substring(0, date.IndexOf("/"));
+            var month = "00";
+            if (date.Length == 10)
+            {//corrige erro quando dia e mês são iguais
+                month = day;
+            }
+            else
+            {
+                month = date.Substring(0, date.IndexOf("/"));
+            }
             date = date.Replace(month + "/", "");
             var year = date.Substring(0, date.IndexOf(" "));
             date = date.Replace(year + " ", "");
@@ -63,17 +71,77 @@ namespace newProject.Controllers
             var data = new Data();
             data.Ano = (valorEmMinutos / 525600).ToString();
             valorEmMinutos = valorEmMinutos % 525600;
-            data.Mes = (valorEmMinutos / 43800).ToString();
+            var testaMes = (valorEmMinutos / 43800).ToString();
+            var dias=0;
+            var posMesGrande = false;
+            switch (testaMes)
+            {
+                case "1":
+                    dias = 31;
+                    posMesGrande = true;
+                    break;
+                case "3":
+                case "5":
+                case "7":
+                case "8":
+                case "10":
+                case "12":
+                    dias = 31;
+                    break;
+                case "2":
+                    dias = 28;
+                    posMesGrande = true;
+                    break;
+                default:
+                    dias = 30;
+                    posMesGrande = true;
+                    break;
+            }
+            data.Mes = testaMes;
             valorEmMinutos = valorEmMinutos % 43800;
-            data.Dia = (valorEmMinutos / 1440).ToString();
+
+            //verifica quantos dias
+            var diasRestantes = (valorEmMinutos / 1440).ToString();
+            if (Int32.Parse(diasRestantes) <= dias)
+            {
+                data.Dia = diasRestantes;
+            }
+            else
+            {
+                var sobra = Int32.Parse(diasRestantes) - dias;
+                data.Dia = sobra.ToString();
+                valorEmMinutos = valorEmMinutos + (Int32.Parse(data.Dia) * 1440);
+                var mesAdicional = Int32.Parse(data.Mes) + 1;
+                data.Mes = mesAdicional.ToString();
+            }
+            var mesAnterior = 0;
+            if (data.Dia == "0")
+            {
+                if (posMesGrande)
+                {
+                    data.Dia = "31";
+                    mesAnterior = Int32.Parse(data.Mes) - 1;
+                    data.Mes = mesAnterior.ToString();
+                }
+                else
+                {
+                    data.Dia = "01";
+                }
+            }
+            else
+            {
+                mesAnterior = Int32.Parse(month);
+            }
             valorEmMinutos = valorEmMinutos % 1440;
+            if (day == "31")
+            {
+                valorEmMinutos = valorEmMinutos - 840;
+            }
             data.Hora = (valorEmMinutos / 60).ToString();
             valorEmMinutos = valorEmMinutos % 60;
             data.Minuto = (valorEmMinutos).ToString();
-
             return data.MontaData();
         }
-
     }
 
    
