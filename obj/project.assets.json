@@ -13221,11 +13221,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\newProject\\newProject.csproj",
+      "projectUniqueName": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\projectDate\\newProject.csproj",
       "projectName": "newProject",
-      "projectPath": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\newProject\\newProject.csproj",
+      "projectPath": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\projectDate\\newProject.csproj",
       "packagesPath": "C:\\Users\\Emanuel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\newProject\\obj\\",
+      "outputPath": "C:\\Users\\Emanuel\\Documents\\aaimportante\\RH\\projectDate\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

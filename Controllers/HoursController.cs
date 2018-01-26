@@ -56,6 +56,27 @@ namespace newProject.Controllers
             date = date.Replace(hour + ":", "");
             var minute = date;
 
+            var time = (Int32.Parse(hour) * 60) + Int32.Parse(minute);
+            if (op == '+')
+            {
+                time = time + minutes;
+            }
+            else if (op == '-')
+            {
+                time = time - minutes;
+            }
+            var data = new Data();
+            if ((time < 1440)||(time > 0))
+            {
+                data.Dia = day;
+                data.Mes = month;
+                data.Ano = year;
+                data.Hora = (time / 60).ToString();
+                time = time % 60;
+                data.Minuto = time.ToString();
+                return data.MontaData();
+            }
+
             var dateInMinutes = (Int32.Parse(day) * 1440) + (Int32.Parse(month) * 43800) + (Int32.Parse(year) * 525600) + (Int32.Parse(hour) * 60) + Int32.Parse(minute);
             var dateInMinutesIncreased = 0;
             if (op == '+')
@@ -68,7 +89,6 @@ namespace newProject.Controllers
             }
 
             var valorEmMinutos = dateInMinutesIncreased;
-            var data = new Data();
             data.Ano = (valorEmMinutos / 525600).ToString();
             valorEmMinutos = valorEmMinutos % 525600;
             var testaMes = (valorEmMinutos / 43800).ToString();
