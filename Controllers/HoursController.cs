@@ -66,7 +66,7 @@ namespace newProject.Controllers
                 time = time - minutes;
             }
             var data = new Data();
-            if ((time < 1440)||(time > 0))
+            if ((time < 1440)&&(time > 0))
             {
                 data.Dia = day;
                 data.Mes = month;
@@ -89,13 +89,18 @@ namespace newProject.Controllers
             }
 
             var valorEmMinutos = dateInMinutesIncreased;
-            data.Ano = (valorEmMinutos / 525600).ToString();
+            var testaAno = (valorEmMinutos / 525600).ToString();
             valorEmMinutos = valorEmMinutos % 525600;
             var testaMes = (valorEmMinutos / 43800).ToString();
             var dias=0;
             var posMesGrande = false;
             switch (testaMes)
             {
+                case "0":
+                    testaMes = "12";
+                    dias = 31;
+                    testaAno = (Int32.Parse(testaAno) - 1).ToString();
+                    break;
                 case "1":
                     dias = 31;
                     posMesGrande = true;
@@ -119,7 +124,7 @@ namespace newProject.Controllers
             }
             data.Mes = testaMes;
             valorEmMinutos = valorEmMinutos % 43800;
-
+            
             //verifica quantos dias
             var diasRestantes = (valorEmMinutos / 1440).ToString();
             if (Int32.Parse(diasRestantes) <= dias)
@@ -132,7 +137,7 @@ namespace newProject.Controllers
                 data.Dia = sobra.ToString();
                 valorEmMinutos = valorEmMinutos + (Int32.Parse(data.Dia) * 1440);
                 var mesAdicional = Int32.Parse(data.Mes) + 1;
-                data.Mes = mesAdicional.ToString();
+                testaMes = mesAdicional.ToString();
             }
             var mesAnterior = 0;
             if (data.Dia == "0")
@@ -141,7 +146,7 @@ namespace newProject.Controllers
                 {
                     data.Dia = "31";
                     mesAnterior = Int32.Parse(data.Mes) - 1;
-                    data.Mes = mesAnterior.ToString();
+                    testaMes = mesAnterior.ToString();
                 }
                 else
                 {
@@ -153,10 +158,18 @@ namespace newProject.Controllers
                 mesAnterior = Int32.Parse(month);
             }
             valorEmMinutos = valorEmMinutos % 1440;
-            if (day == "31")
+            if ((day == "31")||((data.Dia=="31")&&(day=="30"))||((day=="30")&&(data.Dia == "01")))
             {
                 valorEmMinutos = valorEmMinutos - 840;
+                if(valorEmMinutos < 0)
+                {
+                    data.Dia = "30";
+                    testaMes = (Int32.Parse(testaMes) - 1).ToString();
+                    valorEmMinutos = 1440 + (valorEmMinutos);
+                }
             }
+            data.Mes = testaMes;
+            data.Ano = testaAno;
             data.Hora = (valorEmMinutos / 60).ToString();
             valorEmMinutos = valorEmMinutos % 60;
             data.Minuto = (valorEmMinutos).ToString();
